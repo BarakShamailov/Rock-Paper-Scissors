@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+
+<script>
+    
+     const choices = ["rock","paper","scissors"];
+     let humanScore = 0;
+     let computerScore = 0;
+
+     const MAX_ROUNDS = 5;
+
+    playGame();
+
+    function getComputerChoice(){
+
+        const randomNumber = Math.floor(Math.random() * 3);
+        return choices[randomNumber];
+    }
+
+    function getHumanChoice(){
+        let userChoice = "";
+        while (!choices.includes(userChoice)) {
+            userChoice = prompt("Please select: Rock or Paper or Scissors.");
+            if (userChoice === null)
+            {
+                console.log('You skipped the round.');
+                break;
+                return "";
+            }
+            userChoice = userChoice.toLowerCase();
+        }
+       return userChoice;
+    }
+
+    function playRound(humanChoice, computerChoice){
+
+        if (humanChoice == choices[0] && computerChoice == choices[2]){
+            humanScore += 1;
+            console.log("You won! Rock beats Scissors.");
+        }
+        if (humanChoice == choices[0] && computerChoice == choices[1]){
+            computerScore += 1;
+            console.log("You lose! Paper beats Rock.");
+        }
+        if (humanChoice == choices[0] && computerChoice == choices[0]){
+            console.log("Draw! Rock against Rock.");
+        }
+        if (humanChoice == choices[1] && computerChoice == choices[2]){
+                computerScore += 1;
+                console.log("You lose! Scissors beats Paper.");
+           }
+       if (humanChoice == choices[1] && computerChoice == choices[0]){
+            humanScore += 1;
+            console.log("You won! Paper beats Rock.");
+        }
+       if (humanChoice == choices[1] && computerChoice == choices[1]){
+            console.log("Draw! Paper against Paper.");
+        }
+        if (humanChoice == choices[2] && computerChoice == choices[2]){
+            console.log("Draw! Scissors against Scissors.");
+        }
+
+    }
+
+    function playGame(){
+
+        for (let i = 0; i < MAX_ROUNDS; i++) {
+          let user = getHumanChoice();
+          if (user != "")
+          {
+            playRound(user, getComputerChoice());
+          }
+           
+        }
+        finalScore();
+
+
+    }
+
+    function finalScore(){
+
+      if (humanScore > computerScore){
+        console.log("You won the game with " + humanScore + " points.\nThe computer has " + computerScore +" points.")
+      }
+      else if (humanScore == computerScore)
+      {
+        console.log("Draw you and the computer have the same points " + humanScore + ".")
+      }
+      else{
+        console.log("You lose the game with " + humanScore + " points.\nThe computer has " + computerScore +" points.")
+      }
+    }
+
+</script>
+
+</body>
+</html>
