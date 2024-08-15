@@ -53,6 +53,7 @@
         roundCounter++;
         if(roundCounter == MAX_ROUNDS){
             endGame.textContent = ` Game over, ${finalScore()}`;
+            endGame.setAttribute('style', 'text-decoration: underline;');
             buttons.forEach(function(btn) {
             btn.disabled = true;
             });
@@ -62,27 +63,10 @@
 
 
 
-    
-
     function getComputerChoice(){
 
         const randomNumber = Math.floor(Math.random() * 3);
         return choices[randomNumber];
-    }
-
-    function getHumanChoice(){
-        let userChoice = "";
-        while (!choices.includes(userChoice)) {
-            userChoice = prompt("Please select: Rock or Paper or Scissors.");
-            if (userChoice === null)
-            {
-                console.log('You skipped the round.');
-                break;
-                return "";
-            }
-            userChoice = userChoice.toLowerCase();
-        }
-       return userChoice;
     }
 
     function playRound(humanChoice, computerChoice){
@@ -123,21 +107,6 @@
 
     }
 
-    function playGame(){
-
-        for (let i = 0; i < MAX_ROUNDS; i++) {
-          let user = getHumanChoice();
-          if (user != "")
-          {
-            playRound(user, getComputerChoice());
-          }
-           
-        }
-        finalScore();
-
-
-    }
-
     function finalScore(){
 
       if (humanScore > computerScore){
@@ -145,7 +114,7 @@
       }
       else if (humanScore == computerScore)
       {
-        return "Draw you and the computer have the same points ";
+        return "Draw you and the computer have the same points. ";
       }
       else{
         return "You lose the game :(";
