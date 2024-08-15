@@ -3,18 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="header">
+        <div class="logo">
+            Welcome to Rock Paper Scissors Game !
+        </div>
+    <div class="buttons">
+         <button class="styled-button">Rock</button>
+        <button class="styled-button">Scissors</button>
+        <button class="styled-button">Paper</button>
+    </div>
+    <div class="info"> 
+        <div id="results"> </div>
+        <div id="score"></div>
+        <div id='finalScore'></div>
+
+        <div id='endGame'></div>
+    </div>
+
 
 <script>
     
      const choices = ["rock","paper","scissors"];
      let humanScore = 0;
      let computerScore = 0;
+     let roundCounter = 0;
 
      const MAX_ROUNDS = 5;
+     const buttons = document.querySelectorAll('.styled-button');
+     const divResults = document.querySelector('#results');
+     const divScore = document.querySelector('#score');
+     const divFInal = document.querySelector('#finalScore');
+     const endGame = document.querySelector('#endGame');
 
-    playGame();
+  // Iterate over each button and attach an event listener
+  
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+        // Get the text content of the button that was clicked
+       
+        const inputValue = button.textContent.toLowerCase();
+        divResults.textContent = `You chose: ${inputValue} `;
+        let computerChoice = getComputerChoice();
+        divResults.textContent += `  | Computer chose: ${computerChoice}`;  // Logs 'rock', 'scissors', or 'paper'
+        divScore.textContent = playRound(inputValue,computerChoice);
+        divFInal.textContent = `Your score: ${humanScore}   |    computer score: ${computerScore}`;
+        roundCounter++;
+        if(roundCounter == MAX_ROUNDS){
+            endGame.textContent = ` Game over, ${finalScore()}`;
+            buttons.forEach(function(btn) {
+            btn.disabled = true;
+            });
+        }
+        });
+    });
+
+
+
+    
 
     function getComputerChoice(){
 
@@ -41,28 +89,36 @@
 
         if (humanChoice == choices[0] && computerChoice == choices[2]){
             humanScore += 1;
-            console.log("You won! Rock beats Scissors.");
+            return "You won! Rock beats Scissors.";
+        }
+        if (humanChoice == choices[2] && computerChoice == choices[0]){
+            computerScore += 1;
+            return "You lose! Rock beats Scissors.";
         }
         if (humanChoice == choices[0] && computerChoice == choices[1]){
             computerScore += 1;
-            console.log("You lose! Paper beats Rock.");
+            return "You lose! Paper beats Rock.";
         }
         if (humanChoice == choices[0] && computerChoice == choices[0]){
-            console.log("Draw! Rock against Rock.");
+            return "Draw! Rock against Rock.";
         }
         if (humanChoice == choices[1] && computerChoice == choices[2]){
                 computerScore += 1;
-                console.log("You lose! Scissors beats Paper.");
+                return "You lose! Scissors beats Paper.";
            }
+        if (humanChoice == choices[2] && computerChoice == choices[1]){
+            humanScore += 1;
+            return "You won! Scissors beats Paper.";
+        }
        if (humanChoice == choices[1] && computerChoice == choices[0]){
             humanScore += 1;
-            console.log("You won! Paper beats Rock.");
+            return "You won! Paper beats Rock.";
         }
        if (humanChoice == choices[1] && computerChoice == choices[1]){
-            console.log("Draw! Paper against Paper.");
+            return "Draw! Paper against Paper.";
         }
         if (humanChoice == choices[2] && computerChoice == choices[2]){
-            console.log("Draw! Scissors against Scissors.");
+            return "Draw! Scissors against Scissors.";
         }
 
     }
@@ -85,14 +141,14 @@
     function finalScore(){
 
       if (humanScore > computerScore){
-        console.log("You won the game with " + humanScore + " points.\nThe computer has " + computerScore +" points.")
+        return "You won the game :)";
       }
       else if (humanScore == computerScore)
       {
-        console.log("Draw you and the computer have the same points " + humanScore + ".")
+        return "Draw you and the computer have the same points ";
       }
       else{
-        console.log("You lose the game with " + humanScore + " points.\nThe computer has " + computerScore +" points.")
+        return "You lose the game :(";
       }
     }
 
